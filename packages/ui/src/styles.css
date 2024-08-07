@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @font-face {
+    font-family: 'cardinalfruit-reg';
+    src: url('./assets/fonts/cardinalfruitweb-regular.woff2');
+}
+
+@font-face {
     font-family: 'cardinalfruit-med';
     src: url('./assets/fonts/cardinalfruitweb-medium.woff2');
 }
@@ -15,4 +20,19 @@
 @font-face {
     font-family: 'SuiseeIntl';
     src: url('./assets/fonts/SuisseIntlMono-Regular.otf');
+}
+
+@font-face {
+    font-family: 'Ivar-reg';
+    src: url('./assets/fonts/ivartext-regular-webfont.woff2');
+}
+
+@font-face {
+    font-family: 'Ivar-it';
+    src: url('./assets/fonts/ivartext-italic-webfont.woff2');
+}
+
+@font-face {
+    font-family: 'Ivar-bold';
+    src: url('./assets/fonts/ivartext-bold-webfont.woff2');
 }

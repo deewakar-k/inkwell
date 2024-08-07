@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./bottomwarning": "./src/bottomwarning.tsx",
+    "./inputbox": "./src/inputbox.tsx",
+    "./model": "./src/model.tsx",
     "./hero": "./src/hero.tsx",
     "./button": "./src/button.tsx",
     "./navbar": "./src/navbar.tsx"
@@ -25,6 +28,9 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "react": "^18.2.0"
+    "@types/react-modal": "^3.16.3",
+    "react": "^18.2.0",
+    "react-link": "^1.0.3",
+    "react-modal": "^3.16.1"
   }
 }
