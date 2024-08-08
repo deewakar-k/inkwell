@@ -9,9 +9,9 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className="w-full px-52 py-4 flex justify-between items-center border-b border-black">
-        <div className="flex text-6xl font-['cardinalfruit-med']">inkwell</div>
-        <div className="flex items-center gap-10 font-['cardinalfruit-med'] text-xl">
+      <div className="w-full px-52 py-4 flex justify-between items-center border-b border-gray-500">
+        <div className="flex text-5xl font-['Ivar-reg']">inkwell</div>
+        <div className="flex items-center gap-10 font-['Ivar-reg'] text-l">
           <a href="">write</a>
           <button onClick={() => setIsSigninOpen(true)} className="">
             sign in

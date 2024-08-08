@@ -32,7 +32,7 @@ export const AuthModal = ({ isOpen, onRequestClose, initialFormType }: AuthModal
           'Content-Type': 'application/json',
         }
       })
-      const jwt = res.data;
+      const jwt = res.data.token;
       localStorage.setItem("token", jwt)
       navigate("/blogs")
     } catch (e) {

@@ -1,8 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "./button";
 import "./styles.css"
 
 //@ts-ignore
-export const Hero = ({ onClick }) => {
+export const Hero = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="w-full px-52 py-40">
       <div className="relative">
@@ -16,8 +20,10 @@ export const Hero = ({ onClick }) => {
       <div className="absolute top-[130px] right-[600px] transform -rotate-6">
         <img className="w-full h-64" src="https://www.stripe.press/images/pca/Talk11/56_relationships_of_affection_quote.jpg" alt="flowers" />
       </div>
-      <div className="flex justify-center mt-52 font-['cardinalfruit-med'] text-xl text-white">
-        <Button onClick={onClick} label={"start reading"} />
+      <div className="flex justify-center mt-52 font-['Ivar-reg'] text-xl text-white">
+        <Button onClick={() => {
+          navigate('/')
+        }} label={"start reading"} />
       </div>
     </div>
   );
