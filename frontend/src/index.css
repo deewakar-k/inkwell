@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    @apply bg-black;
+    @apply text-[#D5CDC4];
+    @apply m-0 p-0;
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: "Ogg";
+    src: url("./assets/fonts/Ogg-Medium.woff2");
+  }
+
+  @font-face {
+    font-family: "Inter";
+    src: url("./assets/fonts/Inter.woff2");
+  }
+}
