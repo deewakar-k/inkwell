@@ -1,7 +1,7 @@
+import Avatar from "./Avatar";
 import Button from "./Button";
-import Button2 from "./Button2";
 
-function Appbar() {
+function Navbar() {
   return (
     <>
       <div className="flex justify-between items-center ml-48 mr-48 mt-6">
@@ -11,11 +11,13 @@ function Appbar() {
         <div className="flex items-center gap-10">
           <Button label="write" />
           <Button label="sign in" />
-          <Button2 label="get started" />
+          <div className="cursor-pointer">
+            <Avatar />
+          </div>
         </div>
       </div>
     </>
   );
 }
 
-export default Appbar;
+export default Navbar;
