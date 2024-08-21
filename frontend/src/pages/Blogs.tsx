@@ -10,12 +10,12 @@ function Blogs() {
         <Navbar />
       </div>
       <div className="flex flex-col items-center justify-center mt-6">
-        <div className="w-full max-w-2xl">
+        <div className="w-full max-w-2xl cursor-pointer">
           <Heading label="Designers: you need to read science fiction" />
-          <div className="mt-2 text-left">
+          <div className="mt-2 text-left text-sm">
             <Subheading label="To anticipate the needs of users of the future, you need to imagine the future." />
           </div>
-          <div className="mt-6">
+          <div className="mt-6 border-b border-[#D5CDC4] border-opacity-20 pb-4">
             <Description date="Aug 20" likes="1.3k" comment={27} />
           </div>
         </div>

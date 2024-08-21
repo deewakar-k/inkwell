@@ -5,9 +5,7 @@
 @layer base {
   html,
   body {
-    @apply bg-black;
-    @apply text-[#D5CDC4];
-    @apply m-0 p-0;
+    @apply bg-black text-[#D5CDC4] m-0 p-0 font-['Inter'];
   }
 }
 
