@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Blogs from "./pages/Blogs";
 import { Blog } from "./pages/Blog";
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
@@ -14,5 +14,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Button from "./Button";
 import Button2 from "./Button2";
+import ModalComp from "./Modal";
 
 function Appbar() {
   return (
@@ -13,7 +14,7 @@ function Appbar() {
         </Link>
         <div className="flex items-center gap-10">
           <Button label="write" />
-          <Button label="sign in" />
+          <ModalComp />
           <Button2 label="get started" />
         </div>
       </div>

@@ -1,13 +1,17 @@
 interface ButtonProps {
   label: string;
+  onClick: React.MouseEventHandler;
 }
 
-function Button({ label }: ButtonProps) {
+function Button({ label, onClick }: ButtonProps) {
   return (
     <>
-      <div className="cursor-pointer hover:underline font-['Inter'] text-sm">
+      <button
+        onClick={onClick}
+        className="cursor-pointer hover:underline font-['Inter'] text-sm"
+      >
         {label}
-      </div>
+      </button>
     </>
   );
 }

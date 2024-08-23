@@ -2,13 +2,15 @@ import { useState } from "react";
 
 interface ButtonProps {
   label: string;
+  onClick: React.MouseEventHandler;
 }
 
-function Button2({ label }: ButtonProps) {
+function Button2({ label, onClick }: ButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div
+    <button
+      onClick={onClick}
       className={`
         cursor-pointer font-['Inter'] text-sm rounded-full border px-4 py-2
         transition-all duration-200 ease-in-out
@@ -18,7 +20,7 @@ function Button2({ label }: ButtonProps) {
       onMouseLeave={() => setIsHovered(false)}
     >
       {label}
-    </div>
+    </button>
   );
 }
 
