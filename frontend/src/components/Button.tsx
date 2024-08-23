@@ -1,6 +1,6 @@
 interface ButtonProps {
   label: string;
-  onClick: React.MouseEventHandler;
+  onClick?: React.MouseEventHandler;
 }
 
 function Button({ label, onClick }: ButtonProps) {

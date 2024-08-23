@@ -15,7 +15,6 @@ function Appbar() {
         <div className="flex items-center gap-10">
           <Button label="write" />
           <ModalComp />
-          <Button2 label="get started" />
         </div>
       </div>
     </>

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 interface ButtonProps {
   label: string;
-  onClick: React.MouseEventHandler;
+  onClick?: React.MouseEventHandler;
 }
 
 function Button2({ label, onClick }: ButtonProps) {
