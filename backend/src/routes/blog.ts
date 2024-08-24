@@ -63,3 +63,36 @@ blogRouter.post("/", async (c) => {
     return c.json({ msg: "error creating blog", e });
   }
 });
+
+blogRouter.put("/", async (c) => {
+  const body = await c.req.json();
+
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env?.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const blog = await prisma.blog.update({
+      where: {
+        id: body.id,
+      },
+      data: {
+        title: body.title,
+        subTitle: body.subTitle,
+        content: body.content,
+      },
+    });
+
+    c.status(200);
+    return c.json({ msg: "updated blog", id: blog.id });
+  } catch (e) {
+    c.status(411);
+    return c.json({
+      msg: "error updating blog",
+    });
+  }
+});
+
+blogRouter.get("/bulk", async (c) => {
+  return c.text("blogs");
+});
