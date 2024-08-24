@@ -6,10 +6,15 @@
     "cf-typegen": "wrangler types --env-interface CloudflareBindings"
   },
   "dependencies": {
-    "hono": "^4.5.5"
+    "@prisma/client": "^5.18.0",
+    "@prisma/extension-accelerate": "^1.1.0",
+    "cors": "^2.8.5",
+    "hono": "^4.5.5",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^5.18.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240815.0",
-    "wrangler": "^3.57.2"
+    "wrangler": "^3.72.2"
   }
 }
