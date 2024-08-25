@@ -4,10 +4,36 @@ import { useState } from "react";
 import { InputBox } from "./InputBox";
 import Button2 from "./Button2";
 import { BottomWarning } from "./BottomWarning";
+import { BACKEND_URL } from "../config";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const ModalComp = () => {
+const AuthModal = () => {
   const [open, setOpen] = useState(false);
-  const [modalType, setModalType] = useState("signIn"); // "signIn" or "signUp"
+  const [modalType, setModalType] = useState("signin");
+
+  const [postInputs, setPostInputs] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
+
+  const sendRequest = async () => {
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/user/${modalType === "signin" ? "signin" : "signup"}`,
+        postInputs,
+      );
+
+      const { jwt } = response.data;
+      localStorage.setItem("token", jwt);
+      navigate("/blogs");
+    } catch (e) {
+      console.log(e);
+      alert("error while signing up");
+    }
+  };
 
   const handleOpenModal = (type: string) => {
     setModalType(type);
@@ -15,14 +41,14 @@ const ModalComp = () => {
   };
 
   const handleSwitchModal = () => {
-    const newType = modalType === "signIn" ? "signUp" : "signIn";
+    const newType = modalType === "signin" ? "signup" : "signin";
     setModalType(newType);
   };
 
   return (
     <>
-      <Button label="sign in" onClick={() => handleOpenModal("signIn")} />
-      <Button2 label="get started" onClick={() => handleOpenModal("signUp")} />
+      <Button label="sign in" onClick={() => handleOpenModal("signin")} />
+      <Button2 label="get started" onClick={() => handleOpenModal("signup")} />
 
       <Modal
         isOpen={open}
@@ -63,74 +89,78 @@ const ModalComp = () => {
               <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
             </svg>
           </button>
-
-          {modalType === "signIn" ? (
-            <>
-              <h1 className="font-medium font-['Inter'] text-2xl mt-14">
-                Welcome Back!
-              </h1>
-              <div className="flex flex-col mt-6">
-                <div className="mt-6">
-                  <InputBox label="email" type="text" placeholder="email" />
-                </div>
-                <div className="mt-4">
-                  <InputBox
-                    label="password"
-                    type="text"
-                    placeholder="password"
-                  />
-                </div>
-              </div>
-              <div className="mt-10">
-                <Button2 label="sign in" />
-              </div>
-              <div className="absolute bottom-0">
-                <BottomWarning
-                  label="No account?"
-                  buttonText="Create one"
-                  onClick={handleSwitchModal}
-                />
-              </div>
-            </>
+          {modalType === "signin" ? (
+            <h1 className="font-medium font-['Inter'] text-2xl mt-14">
+              Welcome Back!
+            </h1>
           ) : (
-            <>
-              <h1 className="font-medium font-['Inter'] text-2xl mt-14">
-                Join inkwell.
-              </h1>
-              <div className="flex flex-col mt-6">
-                <div className="mt-6">
-                  <InputBox
-                    label="username"
-                    type="text"
-                    placeholder="username"
-                  />
-                </div>
-                <div className="mt-4">
-                  <InputBox label="email" type="email" placeholder="email" />
-                </div>
-                <div className="mt-4">
-                  <InputBox
-                    label="password"
-                    type="password"
-                    placeholder="password"
-                  />
-                </div>
-              </div>
+            <h1 className="font-medium font-['Inter'] text-2xl mt-14">
+              Join inkwell.
+            </h1>
+          )}
+          <div className="flex flex-col mt-6">
+            {modalType !== "signin" && (
               <div className="mt-6">
-                <Button2 label="sign up" />
-              </div>
-              <div className="absolute bottom-0">
-                <BottomWarning
-                  label="Already have an account?"
-                  buttonText="Sign in"
-                  onClick={handleSwitchModal}
+                <InputBox
+                  label="name"
+                  type="text"
+                  placeholder="your name"
+                  onChange={(e) => {
+                    setPostInputs({
+                      ...postInputs,
+                      name: e.target.value,
+                    });
+                  }}
                 />
               </div>
-            </>
-          )}
+            )}
+            <div className={modalType === "signin" ? "mt-6" : "mt-4"}>
+              <InputBox
+                label="email"
+                type={"email"}
+                placeholder="email"
+                onChange={(e) =>
+                  setPostInputs({
+                    ...postInputs,
+                    email: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="mt-4">
+              <InputBox
+                label="password"
+                type={"password"}
+                placeholder="password"
+                onChange={(e) =>
+                  setPostInputs({
+                    ...postInputs,
+                    password: e.target.value,
+                  })
+                }
+              />
+            </div>
+          </div>
+          <div className={modalType === "signin" ? "mt-10" : "mt-6"}>
+            <Button2
+              label={modalType === "signin" ? "sign in" : "sign up"}
+              onClick={sendRequest}
+            />
+          </div>
+          <div className="absolute bottom-0">
+            <BottomWarning
+              label={
+                modalType === "signin"
+                  ? "no account?"
+                  : "already have an account?"
+              }
+              buttonText={modalType === "signin" ? "create one" : "sign in"}
+              onClick={handleSwitchModal}
+            />
+          </div>{" "}
         </div>
       </Modal>
     </>
   );
 };
-export default ModalComp;
+export default AuthModal;
