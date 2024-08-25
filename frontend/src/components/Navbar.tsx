@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Avatar from "./Avatar";
 import Button from "./Button";
+import Menu from "./FlyoutMenu";
 
 function Navbar() {
   return (
@@ -15,7 +15,7 @@ function Navbar() {
           <Button label="write" />
           <Button label="sign in" />
           <div className="cursor-pointer">
-            <Avatar />
+            <Menu />
           </div>
         </div>
       </div>
