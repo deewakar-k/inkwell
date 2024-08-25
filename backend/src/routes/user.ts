@@ -39,7 +39,6 @@ userRouter.post("/signup", async (c) => {
 
     c.status(200);
     return c.json({
-      msg: "user created successfully!",
       jwt,
     });
   } catch (e) {
@@ -73,7 +72,7 @@ userRouter.post("/signin", async (c) => {
 
     const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
     c.status(200);
-    return c.json({ msg: "user signed in", jwt });
+    return c.json({ jwt });
   } catch (e) {
     c.status(411);
     return c.json({ msg: "error signing in", err: e });
