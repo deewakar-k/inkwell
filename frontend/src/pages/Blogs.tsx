@@ -5,6 +5,11 @@ import Navbar from "../components/Navbar";
 import Subheading from "../components/Subheading";
 import { useBlogs } from "../hooks";
 
+const formatDate = (dateString: Date) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+};
+
 function Blogs() {
   const navigate = useNavigate();
   const { loading, blogs } = useBlogs();
@@ -31,7 +36,10 @@ function Blogs() {
                 <Subheading label={blog.subTitle} />
               </div>
               <div className="mt-6 border-b border-[#D5CDC4] border-opacity-20 pb-4">
-                <Description date="Aug 20" likes="1.3k" comment={27} />
+                <Description
+                  date={formatDate(blog.createdAt)}
+                  blogId={blog.id}
+                />
               </div>
             </div>
           ))}

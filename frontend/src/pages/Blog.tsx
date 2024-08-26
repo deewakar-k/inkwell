@@ -6,6 +6,11 @@ import Navbar from "../components/Navbar";
 import Subheading from "../components/Subheading";
 import { useBlog } from "../hooks";
 
+const formatDate = (dateString: Date) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+};
+
 export const Blog = () => {
   const { id } = useParams();
   const { loading, blog } = useBlog({
@@ -34,7 +39,11 @@ export const Blog = () => {
             <MainBody body={blog.content} />
           </div>
           <div className="mt-14 border-b border-[#D5CDC4] border-opacity-20 pb-6">
-            <MainDesc author="Anonymous" />
+            <MainDesc
+              author="Anonymous"
+              date={formatDate(blog.createdAt)}
+              blogId={blog.id}
+            />
           </div>
         </div>
       </div>

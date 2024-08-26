@@ -2,9 +2,11 @@ import Description from "./Description";
 
 interface MainDescProps {
   author: string;
+  blogId: string;
+  date: string;
 }
 
-export const MainDesc = ({ author }: MainDescProps) => {
+export const MainDesc = ({ date, author, blogId }: MainDescProps) => {
   return (
     <>
       <div>
@@ -12,7 +14,7 @@ export const MainDesc = ({ author }: MainDescProps) => {
           <h5>{author}</h5>
         </div>
         <div className="mt-2">
-          <Description date="Aug 20" likes="1.3k" comment={27} />
+          <Description date={date} blogId={blogId} />
         </div>
       </div>
     </>
