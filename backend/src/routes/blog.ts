@@ -162,9 +162,8 @@ blogRouter.get("/:id", async (c) => {
   }
 });
 
-blogRouter.post("/:id/like", async (c) => {
+blogRouter.post("/like/:id", async (c) => {
   const id = c.req.param("id");
-
   const prisma = new PrismaClient({
     datasourceUrl: c.env?.DATABASE_URL,
   }).$extends(withAccelerate());
@@ -184,15 +183,11 @@ blogRouter.post("/:id/like", async (c) => {
           id: existingLike.id,
         },
       });
-
-      const likeCount = await prisma.like.count({
-        where: {
-          blogId: id,
-        },
-      });
-
       c.status(200);
-      return c.json({ msg: "liked!", likes: likeCount });
+      return c.json({
+        msg: "unliked!",
+        liked: false,
+      });
     } else {
       await prisma.like.create({
         data: {
@@ -200,22 +195,39 @@ blogRouter.post("/:id/like", async (c) => {
           blogId: id,
         },
       });
-
-      const likeCount = await prisma.like.count({
-        where: {
-          blogId: id,
-        },
-      });
       c.status(200);
-      return c.json({ msg: "liked!", likes: likeCount });
+      return c.json({ msg: "liked!", liked: true });
     }
   } catch (e) {
     c.status(411);
-    return c.json({ msg: "error liking blog" });
+    return c.json({ msg: "error liking / unliking post" });
   }
 });
 
-blogRouter.post("/:id/save", async (c) => {
+blogRouter.get("/like/:id", async (c) => {
+  const id = c.req.param("id");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env?.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const likes = await prisma.like.count({
+      where: {
+        blogId: id,
+      },
+    });
+
+    c.status(200);
+    return c.json({
+      likes,
+    });
+  } catch (e) {
+    c.status(411);
+    return c.json({ msg: "error fetching likes" });
+  }
+});
+
+blogRouter.post("/save/:id", async (c) => {
   const id = c.req.param("id");
   const userId = c.get("userId");
 
@@ -352,5 +364,28 @@ blogRouter.get("/comment/:id", async (c) => {
   } catch (e) {
     c.status(411);
     return c.json({ msg: "error fetching comments" });
+  }
+});
+
+blogRouter.get("/comments/:id", async (c) => {
+  const id = c.req.param("id");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env?.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const count = await prisma.comment.count({
+      where: {
+        blogId: id,
+      },
+    });
+
+    c.status(200);
+    return c.json({
+      count,
+    });
+  } catch (e) {
+    c.status(411);
+    return c.json({ msg: "error fetching comment count" });
   }
 });
