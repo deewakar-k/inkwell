@@ -121,16 +121,32 @@ export const useBlogComment = ({ id }: { id: string }) => {
 };
 
 export const useBlogSave = ({ id }: { id: string }) => {
-  const [saved, setSaved] = useState<boolean>(false);
+  const [save, setSave] = useState(false);
 
-  const toggleSave = useCallback(async () => {
-    setSaved((prevSaved) => !prevSaved);
+  // const toggleSave = useCallback(async () => {
+  //   await axios.post(
+  //     `${BACKEND_URL}/api/v1/blog/save/${id}`,
+  //     {
+  //       delete: save,
+  //     },
+  //     {
+  //       headers: {
+  //         Authorization: localStorage.getItem("token"),
+  //       },
+  //     },
+  //   );
 
+  //   setSave((prevSave) => {
+  //     return !prevSave;
+  //   });
+  // }, [id, save]);
+
+  const toggleSave = async () => {
     try {
       await axios.post(
         `${BACKEND_URL}/api/v1/blog/save/${id}`,
         {
-          delete: !saved,
+          delete: !save,
         },
         {
           headers: {
@@ -138,15 +154,16 @@ export const useBlogSave = ({ id }: { id: string }) => {
           },
         },
       );
-    } catch (error) {
-      // If the request fails, revert the state change
-      setSaved((prevSaved) => !prevSaved);
-      console.error("Error saving/unsaving blog", error);
-    }
-  }, [id, saved]);
 
+      setSave((prevSave) => {
+        return !prevSave;
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
   return {
-    saved,
+    save,
     toggleSave,
   };
 };

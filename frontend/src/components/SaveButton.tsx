@@ -1,14 +1,14 @@
 import { useBlogSave } from "../hooks";
 
 export const SaveButton = ({ blogId }: { blogId: string }) => {
-  const { saved, toggleSave } = useBlogSave({
+  const { save, toggleSave } = useBlogSave({
     id: blogId,
   });
 
   return (
     <>
       <div onClick={toggleSave} className="cursor-pointer">
-        {saved ? (
+        {save ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

@@ -5,6 +5,7 @@ import { MainHeading } from "../components/MainHeading";
 import Navbar from "../components/Navbar";
 import Subheading from "../components/Subheading";
 import { useBlog } from "../hooks";
+import { Comment } from "../components/Comment";
 
 const formatDate = (dateString: Date) => {
   const date = new Date(dateString);
@@ -44,6 +45,9 @@ export const Blog = () => {
               date={formatDate(blog.createdAt)}
               blogId={blog.id}
             />
+          </div>
+          <div>
+            <Comment />
           </div>
         </div>
       </div>
