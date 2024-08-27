@@ -47,7 +47,7 @@ export const Blog = () => {
             />
           </div>
           <div>
-            <Comment />
+            <Comment blogId={blog.id} />
           </div>
         </div>
       </div>
