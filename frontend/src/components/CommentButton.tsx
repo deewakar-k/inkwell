@@ -1,7 +1,7 @@
-import { useBlogComment } from "../hooks";
+import { useBlogCommentCount } from "../hooks";
 
 export const CommentButton = ({ blogId }: { blogId: string }) => {
-  const { count } = useBlogComment({
+  const { count } = useBlogCommentCount({
     id: blogId,
   });
   return (

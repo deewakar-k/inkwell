@@ -99,9 +99,8 @@ export const useBlogLike = ({ id }: { id: string }) => {
   };
 };
 
-export const useBlogComment = ({ id }: { id: string }) => {
+export const useBlogCommentCount = ({ id }: { id: string }) => {
   const [count, setCount] = useState();
-  const [comments, setComments] = useState([]);
 
   const fetchComments = useCallback(async () => {
     const res = await axios.get(`${BACKEND_URL}/api/v1/blog/comments/${id}`, {
@@ -112,22 +111,34 @@ export const useBlogComment = ({ id }: { id: string }) => {
     setCount(res.data.count);
   }, [id]);
 
-  const fetchComment = useCallback(async () => {
-    const res = await axios.get(`${BACKEND_URL}/api/v1/blog/comment/${id}`, {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    });
-    setComments(res.data);
-  }, [id]);
-
   useEffect(() => {
     fetchComments();
-    fetchComment();
-  }, [fetchComments, fetchComment]);
+  }, [fetchComments]);
 
   return {
     count,
+  };
+};
+
+export interface Comments {
+  content: string;
+}
+export const useBlogComment = ({ id }: { id: string }) => {
+  const [comments, setComments] = useState<Comments[]>([]);
+
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URL}/api/v1/blog/comment/${id}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        setComments(res.data.comments);
+      });
+  }, [id]);
+
+  return {
     comments,
   };
 };
