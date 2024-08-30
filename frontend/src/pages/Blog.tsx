@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import Subheading from "../components/Subheading";
 import { useBlog } from "../hooks";
 import { Comment } from "../components/Comment";
+import { CommentInput } from "../components/CommentInput";
 
 const formatDate = (dateString: Date) => {
   const date = new Date(dateString);
@@ -30,7 +31,7 @@ export const Blog = () => {
       <div className="border-b border-[#D5CDC4] pb-6">
         <Navbar />
       </div>
-      <div className="flex flex-col items-center justify-center mt-14">
+      <div className="flex flex-col items-center justify-center mt-14 w-full">
         <div className="w-full max-w-2xl">
           <MainHeading label={blog.title} />
           <div className="mt-4 font-medium">
@@ -46,7 +47,10 @@ export const Blog = () => {
               blogId={blog.id}
             />
           </div>
-          <div>
+          <div className="mt-4 w-full">
+            <CommentInput />
+          </div>
+          <div className="w-full">
             <Comment />
           </div>
         </div>

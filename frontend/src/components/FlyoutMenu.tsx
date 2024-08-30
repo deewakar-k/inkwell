@@ -27,7 +27,7 @@ const FlyoutLink: React.FC<FlyoutLinkProps> = ({
 }) => {
   const [open, setOpen] = useState<boolean>(false);
 
-  const showFlyout = FlyoutContent && open;
+  const showFlyout: boolean = open;
 
   return (
     <div

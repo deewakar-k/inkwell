@@ -13,16 +13,12 @@ export const Comment = () => {
     <>
       <div className="italic mt-6">
         <div className="text-md font-bold">Comments</div>
-        <div className="flex justify-start gap-3 mt-3">
+        <div className="flex flex-col justify-start gap-3 mt-3">
           {comments.map((comment) => (
-            <>
-              <div>
-                <CommentAvatar />
-              </div>
-              <div>
-                <Content content={comment.content} />
-              </div>
-            </>
+            <div className="flex items-start gap-3">
+              <CommentAvatar />
+              <Content content={comment.content} />
+            </div>
           ))}
         </div>
       </div>

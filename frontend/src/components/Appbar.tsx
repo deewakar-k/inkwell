@@ -12,7 +12,9 @@ function Appbar() {
           </div>
         </Link>
         <div className="flex items-center gap-10">
-          <Button label="write" />
+          <Link to={"/write"}>
+            <Button label="write" />
+          </Link>
           <AuthModal />
         </div>
       </div>
