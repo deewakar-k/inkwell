@@ -13,6 +13,10 @@ const formatDate = (dateString: Date) => {
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 };
 
+const cleanContent = (content: string): string => {
+  return content.replace(/^"|"$/g, ""); // Remove leading and trailing quotes
+};
+
 export const Blog = () => {
   const { id } = useParams();
   const { loading, blog } = useBlog({
@@ -38,7 +42,7 @@ export const Blog = () => {
             <Subheading label={blog.subTitle} />
           </div>
           <div className="mt-8 text-left text-sm">
-            <MainBody body={blog.content} />
+            <MainBody body={cleanContent(blog.content)} />
           </div>
           <div className="mt-14 border-b border-[#D5CDC4] border-opacity-20 pb-6">
             <MainDesc

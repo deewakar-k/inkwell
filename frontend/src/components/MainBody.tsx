@@ -5,7 +5,7 @@ interface MainBodyProps {
 export const MainBody = ({ body }: MainBodyProps) => {
   return (
     <>
-      <h3 className="">{body}</h3>
+      <h3 className="font-['Inter']">{body}</h3>
     </>
   );
 };

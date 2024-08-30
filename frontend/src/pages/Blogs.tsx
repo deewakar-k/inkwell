@@ -19,7 +19,7 @@ function Blogs() {
 
   return (
     <>
-      <div className="border-b pb-6">
+      <div className="border-b border-[#D5CDC4] pb-6">
         <Navbar />
       </div>
       <div className="flex flex-col items-center justify-center mt-6">

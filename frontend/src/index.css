@@ -20,3 +20,17 @@
     src: url("./assets/fonts/Inter.woff2");
   }
 }
+
+.tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  font-size: 14px;
+}
+
+.tiptap p {
+  font-size: 14px;
+  line-height: 20px;
+}
