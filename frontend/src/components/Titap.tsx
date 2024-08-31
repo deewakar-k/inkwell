@@ -141,6 +141,11 @@ const Tiptap = () => {
 
             const content = editor.getHTML();
 
+            if (content.trim() === "") {
+              alert("Content is required!");
+              return;
+            }
+
             const res = await axios.post(
               `${BACKEND_URL}/api/v1/blog`,
               {
