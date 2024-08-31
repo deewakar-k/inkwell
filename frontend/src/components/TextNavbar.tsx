@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import Button from "./Button";
 import Menu from "./FlyoutMenu";
 
-function Navbar() {
+function TextNavbar() {
   return (
     <>
       <div className="flex justify-between items-center ml-48 mr-48 mt-6">
@@ -12,9 +11,6 @@ function Navbar() {
           </div>
         </Link>
         <div className="flex items-center gap-10">
-          <Link to={"/write"}>
-            <Button label="write" />
-          </Link>
           <div className="cursor-pointer">
             <Menu />
           </div>
@@ -24,4 +20,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default TextNavbar;

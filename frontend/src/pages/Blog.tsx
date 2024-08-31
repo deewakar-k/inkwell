@@ -4,17 +4,15 @@ import { MainDesc } from "../components/MainDesc";
 import { MainHeading } from "../components/MainHeading";
 import Navbar from "../components/Navbar";
 import Subheading from "../components/Subheading";
-import { useBlog } from "../hooks";
+import { useBlog, useBlogComment } from "../hooks";
 import { Comment } from "../components/Comment";
 import { CommentInput } from "../components/CommentInput";
+import { useCallback, useState } from "react";
+import { Loader } from "../components/Loader";
 
 const formatDate = (dateString: Date) => {
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-};
-
-const cleanContent = (content: string): string => {
-  return content.replace(/^"|"$/g, ""); // Remove leading and trailing quotes
 };
 
 export const Blog = () => {
@@ -22,8 +20,17 @@ export const Blog = () => {
   const { loading, blog } = useBlog({
     id: id || "",
   });
+
+  const [refresh, setRefresh] = useState(false);
+  const handleComment = useCallback(() => {
+    setRefresh((prev) => !prev); // Toggle to trigger re-render
+  }, []);
   if (loading) {
-    return <div>loading...</div>;
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
 
   if (!blog) {
@@ -42,7 +49,7 @@ export const Blog = () => {
             <Subheading label={blog.subTitle} />
           </div>
           <div className="mt-8 text-left text-sm">
-            <MainBody body={cleanContent(blog.content)} />
+            <MainBody body={blog.content} />
           </div>
           <div className="mt-14 border-b border-[#D5CDC4] border-opacity-20 pb-6">
             <MainDesc
@@ -52,10 +59,10 @@ export const Blog = () => {
             />
           </div>
           <div className="mt-4 w-full">
-            <CommentInput />
+            <CommentInput handleComment={handleComment} />
           </div>
           <div className="w-full">
-            <Comment />
+            <Comment key={refresh ? "refresh" : "no-refresh"} />
           </div>
         </div>
       </div>

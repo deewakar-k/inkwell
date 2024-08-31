@@ -4,7 +4,11 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useState } from "react";
 
-export const CommentInput = () => {
+interface CommentInputProps {
+  handleComment: () => void;
+}
+
+export const CommentInput = ({ handleComment }: CommentInputProps) => {
   const { id } = useParams();
 
   const [comment, setComment] = useState({
@@ -26,6 +30,7 @@ export const CommentInput = () => {
         },
       );
       setComment({ content: "" });
+      handleComment();
     } catch (e) {
       console.log(e);
     }

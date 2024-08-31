@@ -7,7 +7,24 @@ import Button2 from "./Button2";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
-import { RiBold, RiDoubleQuotesL, RiH2, RiItalic } from "react-icons/ri";
+import {
+  RiBold,
+  RiCodeLine,
+  RiDoubleQuotesL,
+  RiH2,
+  RiItalic,
+} from "react-icons/ri";
+import Bold from "@tiptap/extension-bold";
+import Blockquote from "@tiptap/extension-blockquote";
+import Heading from "@tiptap/extension-heading";
+import CodeBlockLowLight from "@tiptap/extension-code-block-lowlight";
+import { all, createLowlight } from "lowlight";
+import rust from "highlight.js/lib/languages/rust";
+import "highlight.js/styles/github-dark.css";
+
+const lowlight = createLowlight(all);
+
+lowlight.register("rust", rust);
 
 const Tiptap = () => {
   const [title, setTitle] = useState("");
@@ -16,7 +33,20 @@ const Tiptap = () => {
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        hardBreak: {
+          keepMarks: true,
+        },
+      }),
+      Bold,
+      Blockquote,
+      CodeBlockLowLight.configure({
+        lowlight,
+      }),
+      Heading.configure({
+        levels: [1, 2, 3],
+      }),
+
       Placeholder.configure({
         placeholder: "Tell your story...",
       }),
@@ -36,7 +66,7 @@ const Tiptap = () => {
           <input
             type="text"
             placeholder="Title"
-            className="font-['Inter'] font-extrabold text-5xl bg-black focus:outline-none"
+            className="font-['Inter'] font-extrabold text-5xl bg-black focus:outline-none placeholder-zinc-800"
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
@@ -44,7 +74,7 @@ const Tiptap = () => {
           <input
             type="text"
             placeholder="Subtitle"
-            className="text-lg bg-black focus:outline-none font-['Inter']"
+            className="text-lg bg-black focus:outline-none font-['Inter'] placeholder-zinc-800"
             onChange={(e) => setSubTitle(e.target.value)}
           />
         </div>
@@ -52,7 +82,7 @@ const Tiptap = () => {
 
       {editor && (
         <BubbleMenu
-          className="bubble-menu bg-black rounded-md pt-[2px] text-white"
+          className="bubble-menu bg-zinc-900 p-2 text-center justify-between rounded-md pt-[2px] text-white flex gap-2"
           tippyOptions={{ duration: 100 }}
           editor={editor}
         >
@@ -64,7 +94,6 @@ const Tiptap = () => {
           >
             <RiBold size={20} />
           </button>
-          <span className="seperator"></span>
           <button
             onClick={() => editor.chain().focus().toggleItalic().run()}
             className={
@@ -73,10 +102,9 @@ const Tiptap = () => {
           >
             <RiItalic size={20} />
           </button>
-          <span className="seperator"></span>
           <button
             onClick={() =>
-              editor.chain().focus().toggleHeading({ level: 1 }).run()
+              editor.chain().focus().toggleHeading({ level: 2 }).run()
             }
             className={
               editor.isActive("heading", { level: 2 })
@@ -86,28 +114,33 @@ const Tiptap = () => {
           >
             <RiH2 size={20} />
           </button>
-          <span className="seperator"></span>
           <button
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
-            className={editor.isActive("blockquote") ? "is-active" : ""}
+            className={
+              editor.isActive("blockquote") ? "is-active text-green-200" : ""
+            }
           >
             <RiDoubleQuotesL size={20} />
+          </button>
+          <button
+            onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+            className={editor.isActive("codeBlock") ? "is-active" : ""}
+          >
+            <RiCodeLine size={20} />
           </button>
         </BubbleMenu>
       )}
 
       <EditorContent editor={editor} />
 
-      <div className="mt-10">
+      <div className="mt-10 flex justify-end">
         <Button2
           label="publish"
           onClick={async () => {
             if (!editor) return;
 
-            const jsonContent = editor.getJSON();
-            const content = extractTextFromJSON(jsonContent);
+            const content = editor.getHTML();
 
-            console.log("Extracted Content:", content);
             const res = await axios.post(
               `${BACKEND_URL}/api/v1/blog`,
               {
@@ -127,20 +160,6 @@ const Tiptap = () => {
       </div>
     </>
   );
-};
-
-const extractTextFromJSON = (json: any): string => {
-  const getTextFromNode = (node: any): string => {
-    if (node.type === "text") {
-      return node.text || "";
-    }
-    if (node.content && Array.isArray(node.content)) {
-      return node.content.map(getTextFromNode).join("");
-    }
-    return "";
-  };
-
-  return getTextFromNode(json).trim(); // Ensure no extra spaces or unwanted characters
 };
 
 export default Tiptap;

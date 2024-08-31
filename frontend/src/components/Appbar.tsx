@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Button from "./Button";
 import AuthModal from "./Modal";
 
 function Appbar() {
@@ -12,9 +11,6 @@ function Appbar() {
           </div>
         </Link>
         <div className="flex items-center gap-10">
-          <Link to={"/write"}>
-            <Button label="write" />
-          </Link>
           <AuthModal />
         </div>
       </div>

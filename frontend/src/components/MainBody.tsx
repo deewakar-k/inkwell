@@ -1,3 +1,6 @@
+import { RichTextContext } from "./RichTextContext";
+import "../index.css";
+
 interface MainBodyProps {
   body: string;
 }
@@ -5,7 +8,9 @@ interface MainBodyProps {
 export const MainBody = ({ body }: MainBodyProps) => {
   return (
     <>
-      <h3 className="font-['Inter']">{body}</h3>
+      <h3 className="font-['Inter']">
+        <RichTextContext content={body} />
+      </h3>
     </>
   );
 };

@@ -4,6 +4,7 @@ import Heading from "../components/Heading";
 import Navbar from "../components/Navbar";
 import Subheading from "../components/Subheading";
 import { useBlogs } from "../hooks";
+import { Loader } from "../components/Loader";
 
 const formatDate = (dateString: Date) => {
   const date = new Date(dateString);
@@ -14,7 +15,11 @@ function Blogs() {
   const navigate = useNavigate();
   const { loading, blogs } = useBlogs();
   if (loading) {
-    return <div>loading...</div>;
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
 
   return (

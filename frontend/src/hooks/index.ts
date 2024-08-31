@@ -64,28 +64,35 @@ export const useBlogLike = ({ id }: { id: string }) => {
   const [likes, setLikes] = useState(0);
 
   const fetchLikes = useCallback(async () => {
-    const res = await axios.get(`${BACKEND_URL}/api/v1/blog/like/${id}`, {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    });
-    setLikes(res.data.likes);
-  }, [id]);
-
-  const toggleLike = async () => {
-    await axios.post(
-      `${BACKEND_URL}/api/v1/blog/like/${id}`,
-      {},
-      {
+    try {
+      const res = await axios.get(`${BACKEND_URL}/api/v1/blog/like/${id}`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
-      },
-    );
-    setLiked((prevLiked) => {
-      return !prevLiked;
-    });
-    await fetchLikes();
+      });
+      setLikes(res.data.likes);
+      setLiked(res.data.liked); // Ensure this is set correctly
+    } catch (error) {
+      console.error("Error fetching likes:", error);
+    }
+  }, [id]);
+
+  const toggleLike = async () => {
+    try {
+      const res = await axios.post(
+        `${BACKEND_URL}/api/v1/blog/like/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        },
+      );
+      setLiked(res.data.liked); // Update the liked state
+      setLikes((prevLikes) => (res.data.liked ? prevLikes + 1 : prevLikes - 1));
+    } catch (error) {
+      console.error("Error toggling like:", error);
+    }
   };
 
   useEffect(() => {
@@ -123,53 +130,42 @@ export const useBlogCommentCount = ({ id }: { id: string }) => {
 export interface Comments {
   content: string;
 }
+
 export const useBlogComment = ({ id }: { id: string }) => {
   const [comments, setComments] = useState<Comments[]>([]);
 
-  useEffect(() => {
-    axios
-      .get(`${BACKEND_URL}/api/v1/blog/comment/${id}`, {
+  const fetchComments = useCallback(async () => {
+    try {
+      const res = await axios.get(`${BACKEND_URL}/api/v1/blog/comment/${id}`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
-      })
-      .then((res) => {
-        setComments(res.data.comments);
       });
+      setComments(res.data.comments);
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
   }, [id]);
+
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
 
   return {
     comments,
+    fetchComments,
   };
 };
 
 export const useBlogSave = ({ id }: { id: string }) => {
   const [save, setSave] = useState(false);
 
-  // const toggleSave = useCallback(async () => {
-  //   await axios.post(
-  //     `${BACKEND_URL}/api/v1/blog/save/${id}`,
-  //     {
-  //       delete: save,
-  //     },
-  //     {
-  //       headers: {
-  //         Authorization: localStorage.getItem("token"),
-  //       },
-  //     },
-  //   );
-
-  //   setSave((prevSave) => {
-  //     return !prevSave;
-  //   });
-  // }, [id, save]);
-
   const toggleSave = async () => {
     try {
       await axios.post(
         `${BACKEND_URL}/api/v1/blog/save/${id}`,
         {
-          delete: !save,
+          delete: save,
         },
         {
           headers: {

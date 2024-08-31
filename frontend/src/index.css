@@ -22,7 +22,7 @@
 }
 
 .tiptap p.is-editor-empty:first-child::before {
-  color: #adb5bd;
+  color: rgb(113 113 122);
   content: attr(data-placeholder);
   float: left;
   height: 0;
@@ -33,4 +33,80 @@
 .tiptap p {
   font-size: 14px;
   line-height: 20px;
+}
+
+.tiptap blockquote {
+  border-left: 2px solid white;
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+}
+
+.tiptap-content {
+  white-space: pre-wrap;
+}
+
+.tiptap-content blockquote {
+  border-left: 2px solid #d5cdc4;
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+}
+
+.tiptap-content strong {
+  font-weight: bold;
+}
+
+.tiptap-content em {
+  font-style: italic;
+}
+
+.tiptap-content pre {
+  background-color: #0d1117;
+  color: #c9d1d9;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
+.tiptap-content code {
+  font-family: inherit;
+}
+
+.loader i {
+  display: block;
+  width: 85px; /* Adjust width for horizontal orientation */
+  height: 2px; /* Adjust height for horizontal orientation */
+  margin-top: 18px;
+  background-color: rgba(61, 61, 61, 0.5);
+  overflow: hidden;
+  position: relative;
+}
+
+.loader i:before {
+  display: block;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: loader-animation 2s infinite normal;
+}
+
+@keyframes loader-animation {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  15% {
+    transform: translate3d(-98%, 0, 0);
+  }
+  85% {
+    transform: translate3d(98%, 0, 0);
+  }
+  100% {
+    transform: translate3d(100%, 0, 0);
+  }
 }
