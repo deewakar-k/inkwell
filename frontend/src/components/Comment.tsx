@@ -18,7 +18,7 @@ export const Comment = () => {
     <>
       <div className="italic mt-6">
         <div className="text-md font-bold">Comments</div>
-        <div className="flex flex-col justify-start gap-3 mt-3">
+        <div className="flex flex-col justify-start gap-3 mt-3 mb-10">
           {comments.map((comment, index) => (
             <div key={index} className="flex items-start gap-3">
               <CommentAvatar />
