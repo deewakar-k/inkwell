@@ -43,12 +43,18 @@
 
 .tiptap-content {
   white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .tiptap-content blockquote {
   border-left: 2px solid #d5cdc4;
   margin: 1.5rem 0;
   padding-left: 1rem;
+}
+
+.tiptap-content p {
+  margin: 0; /* Remove default margin to avoid extra space */
+  line-height: 1.5; /* Adjust line height for readability */
 }
 
 .tiptap-content strong {
