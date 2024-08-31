@@ -66,7 +66,7 @@ const Tiptap = () => {
           <input
             type="text"
             placeholder="Title"
-            className="font-['Inter'] font-extrabold text-5xl bg-black focus:outline-none placeholder-zinc-800"
+            className="w-full font-['Inter'] font-extrabold text-5xl bg-black focus:outline-none placeholder-zinc-800"
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
@@ -74,7 +74,7 @@ const Tiptap = () => {
           <input
             type="text"
             placeholder="Subtitle"
-            className="text-lg bg-black focus:outline-none font-['Inter'] placeholder-zinc-800"
+            className="w-full text-lg bg-black focus:outline-none font-['Inter'] placeholder-zinc-800"
             onChange={(e) => setSubTitle(e.target.value)}
           />
         </div>
