@@ -4,7 +4,7 @@ import { MainDesc } from "../components/MainDesc";
 import { MainHeading } from "../components/MainHeading";
 import Navbar from "../components/Navbar";
 import Subheading from "../components/Subheading";
-import { useBlog, useBlogComment } from "../hooks";
+import { useBlog } from "../hooks";
 import { Comment } from "../components/Comment";
 import { CommentInput } from "../components/CommentInput";
 import { useCallback, useState } from "react";
