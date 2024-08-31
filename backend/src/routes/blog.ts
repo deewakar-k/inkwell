@@ -48,7 +48,7 @@ blogRouter.post("/", async (c) => {
       data: {
         title: body.title,
         subTitle: body.subTitle,
-        content: JSON.stringify(body.content),
+        content: body.content,
         authorId: userId,
       },
     });
@@ -183,7 +183,6 @@ blogRouter.post("/like/:id", async (c) => {
           id: existingLike.id,
         },
       });
-      c.status(200);
       return c.json({
         msg: "unliked!",
         liked: false,
@@ -195,11 +194,13 @@ blogRouter.post("/like/:id", async (c) => {
           blogId: id,
         },
       });
-      c.status(200);
-      return c.json({ msg: "liked!", liked: true });
+      return c.json({
+        msg: "liked!",
+        liked: true,
+      });
     }
   } catch (e) {
-    c.status(411);
+    c.status(500);
     return c.json({ msg: "error liking / unliking post" });
   }
 });
@@ -210,19 +211,28 @@ blogRouter.get("/like/:id", async (c) => {
     datasourceUrl: c.env?.DATABASE_URL,
   }).$extends(withAccelerate());
 
+  const userId = c.get("userId");
+
   try {
-    const likes = await prisma.like.count({
+    const likeCount = await prisma.like.count({
       where: {
         blogId: id,
       },
     });
 
-    c.status(200);
+    const existingLike = await prisma.like.findFirst({
+      where: {
+        userId,
+        blogId: id,
+      },
+    });
+
     return c.json({
-      likes,
+      likes: likeCount,
+      liked: !!existingLike,
     });
   } catch (e) {
-    c.status(411);
+    c.status(500);
     return c.json({ msg: "error fetching likes" });
   }
 });
